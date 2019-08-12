@@ -6,42 +6,31 @@ import {
     Button as RNButton
 } from 'react-native';
 
+import styles from './style';
+
 const testEntries = [
-    {
-        name: "John Smith",
-        message: "Loved my stay, so wonderful"
-    }, {
-        name: "John Smith",
-        message: "Couldn't resist coming back, loved it even more"
-    }, {
-        name: "Jane Peters",
-        message: "Really hard to book, totally worth it"
-    }, {
-        name: "John Smith",
-        message: "I just keep booking in because it is so great"
-    }, {
-        name: "John Smith",
-        message: "It's official, I'm moving in"
-    }
 ]
 
-const Input = ({value, onChange, label}) => <TextInput value={value} type="text" onChange={onChange} className="input" placeholder={label} />
-const TextArea = ({value, onChange, label}) =>  <TextInput className="textarea" value={value} onChange={onChange} placeholder={label} />
-const Button = ({onClick}) => <RNButton className="button" title="Submit" onPress={onClick} />
+
+const Input = ({value, onChange, label}) => <TextInput value={value} type="text" style={styles.input} onChange={onChange} placeholder={label} />
+const TextArea = ({value, onChange, label}) =>  <TextInput value={value} style={styles.textarea} onChange={onChange} placeholder={label} />
+const Button = ({onClick}) => <View style={styles.button}>
+    <RNButton title="Start" color="#841584" onPress={onClick} />
+</View>
 
 const Entry = ({name, message}) => <Text>{name} | {message}</Text>
-const EntryList = ({entries}) => <View className="entrylist">
+const EntryList = ({entries}) => <View style={styles.entrylist}>
     {entries.map( (entry, index) => <Entry {...entry} key={index}/> )}
     {entries.length === 0 && <Text>No entries ATM</Text>}
 </View>
 
-const Form = ({message, name, onNameChange, onMessageChange, onSubmit}) => <View className="form">
+const Form = ({message, name, onNameChange, onMessageChange, onSubmit, running, time}) => <View style={styles.form}>
     <Input value={name} onChange={onNameChange} label="Name" />
     <TextArea value={message} onChange={onMessageChange} label="Leave a message" />
-    <Button onClick={onSubmit}/>
+    <Button onClick={onSubmit} running={running} time={time}/>
 </View>
 
-const Container = ({children}) => <View>{children}</View>
+const Container = ({children}) => <View style={styles.root}>{children}</View>
 
 class App extends React.Component {
 
@@ -49,6 +38,9 @@ class App extends React.Component {
         name: '',
         message: '',
         entries: testEntries,
+        start: -1,
+        time: 0,
+        running: false,
     }
 
     onNameChange = (ev) => {
@@ -71,7 +63,7 @@ class App extends React.Component {
             entries: [
                 {
                     name,
-                    message,
+                    message
                 },
                 ...entries
             ]
@@ -79,7 +71,8 @@ class App extends React.Component {
     }
 
     render() {
-        const {entries, name, message} = this.state
+        const {entries, name, message, running, start} = this.state
+        let time = (+new Date()) - start;
         return (<Container>
             <Form
                 message={message}

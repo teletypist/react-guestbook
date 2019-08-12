@@ -3,19 +3,17 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     //Applied to
   root: {
-      maxWidth: '650px',
-      margin: '1rem auto',
       boxSizing: 'border-box',
   },
   form: {
       display: 'flex',
       flexDirection: 'column',
       padding: '0.5rem',
-      background: 'Linen',
+      backgroundColor: '#FAF0E6',
       width: '100%',
   },
   entrylist: {
-      background: 'LightCyan',
+      backgroundColor: '#F5DEB3',
       width: '100%',
       padding: '0.5rem',
   },
@@ -29,5 +27,9 @@ const styles = StyleSheet.create({
   button: {
       alignSelf: 'flex-end',
       marginBottom: '0.5rem',
+      backgroundColor: '#ff0000',
+      width: '8rem',
   },
 });
+
+export default styles;
