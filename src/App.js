@@ -1,4 +1,10 @@
 import React from 'react';
+import {
+    View,
+    Text,
+    TextInput,
+    Button as RNButton
+} from 'react-native';
 
 const testEntries = [
     {
@@ -19,23 +25,23 @@ const testEntries = [
     }
 ]
 
-const Input = ({value, onChange, label}) => <input value={value} type="text" onChange={onChange} className="input" placeholder={label} />
-const TextArea = ({value, onChange, label}) =>  <textarea className="textarea" value={value} onChange={onChange} placeholder={label} />
-const Button = ({onClick}) => <button className="button" onClick={onClick}>Submit</button>
+const Input = ({value, onChange, label}) => <TextInput value={value} type="text" onChange={onChange} className="input" placeholder={label} />
+const TextArea = ({value, onChange, label}) =>  <TextInput className="textarea" value={value} onChange={onChange} placeholder={label} />
+const Button = ({onClick}) => <RNButton className="button" title="Submit" onPress={onClick} />
 
-const Entry = ({name, message}) => <div>{name} | {message}</div>
-const EntryList = ({entries}) => <div className="entrylist">
+const Entry = ({name, message}) => <Text>{name} | {message}</Text>
+const EntryList = ({entries}) => <View className="entrylist">
     {entries.map( (entry, index) => <Entry {...entry} key={index}/> )}
-    {entries.length === 0 && <span>No entries ATM</span>}
-</div>
+    {entries.length === 0 && <Text>No entries ATM</Text>}
+</View>
 
-const Form = ({message, name, onNameChange, onMessageChange, onSubmit}) => <div className="form">
+const Form = ({message, name, onNameChange, onMessageChange, onSubmit}) => <View className="form">
     <Input value={name} onChange={onNameChange} label="Name" />
     <TextArea value={message} onChange={onMessageChange} label="Leave a message" />
     <Button onClick={onSubmit}/>
-</div>
+</View>
 
-const Container = ({children}) => <div>{children}</div>
+const Container = ({children}) => <View>{children}</View>
 
 class App extends React.Component {
 
